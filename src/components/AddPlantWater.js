@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
+
+import DateFnsUtils from '@date-io/date-fns';
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import DateFnsUtils from '@date-io/date-fns';
-import { format, compareAsc } from 'date-fns'
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
-  KeyboardDatePicker,
 } from '@material-ui/pickers'
-
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom'
@@ -20,8 +17,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { createPlantSchedule } from '../actions/plants'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Dashboard from "./Dashboard";
-import {plants} from '../reducers/plants'
 
 //components
 import Copyright from './Copyright'
@@ -83,7 +78,7 @@ const AddPlantWater = props => {
   const classes = useStyles();
   console.log(props.match.params.id)
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
 
   const [water, setWater] = useState({
     plant_id: props.match.params.id,

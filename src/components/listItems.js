@@ -10,7 +10,7 @@ import AddIcon from "@material-ui/icons/Add";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
 import { Link } from 'react-router-dom'
-
+import { push } from 'connected-react-router';
 import { logoutUser } from "../actions/index"
 
 import { connect } from 'react-redux'
@@ -19,8 +19,8 @@ import { connect } from 'react-redux'
 function MainListItems(props) {
 
   const handleLogout = event => {
-    event.preventDefault()
     props.logoutUser()
+      
   }
 
   return(
@@ -48,7 +48,7 @@ function MainListItems(props) {
     </ListItem>
     </Link>
 
-    <ListItem button onClick = {()=> handleLogout(props.history)}>
+    <ListItem button onClick = {handleLogout}>
       <ListItemIcon>
         <MeetingRoomIcon />
       </ListItemIcon>

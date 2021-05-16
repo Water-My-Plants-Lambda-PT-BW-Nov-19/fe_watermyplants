@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
+import {Link} from 'react-router-dom';
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -67,19 +69,18 @@ const Register = props => {
 
 
   const handlerChange = event => {
-    event.preventDefault()
-    console.log('username and password change',user);
+    /*console.log('username and password change',user);*/
     setUser({ ...user, [event.target.name]: event.target.value });
   };
   const handlePhoneChange = value => {
     setUser({ ...user, phone:value })
-    console.log('phone change', user);
+   /*console.log('phone change', user);*/
   }
 
   const submitHandler = event => {
     event.preventDefault();
-    props.registerUser(user)
-    console.log(user)
+    props.registerUser({...user})
+    /*console.log("REGISTER USER", user)*/
   };
 
   return (
@@ -90,11 +91,11 @@ const Register = props => {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} onSubmit={()=> submitHandler(props.history)} noValidate>
+        <form className={classes.form} onSubmit={submitHandler} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
-            required ="true"
+            required ={true}
             fullWidth
             name="username"
             value={props.username}
@@ -108,7 +109,7 @@ const Register = props => {
             defaultCountry={'us'}
             variant="outlined"
             margin="normal"
-            required="true"
+            required={true}
             fullWidth
             name="phone"
             label="Phone"
@@ -121,7 +122,7 @@ const Register = props => {
           <TextField
             variant="outlined"
             margin="normal"
-            required="true"
+            required={true}
             fullWidth
             name="password"
             label="Password"
@@ -135,7 +136,7 @@ const Register = props => {
             type="submit"
             fullWidth
             variant="contained"
-            color="white"
+            color='default'
             className={classes.submit}
           >
             Register
@@ -143,7 +144,7 @@ const Register = props => {
           </StyledButton>
           <Grid container>
             <Grid item xs>
-              <Link href="" variant="body2">
+              <Link to="/login" >
                 {"Already have an account? Log In."}
               </Link>
 

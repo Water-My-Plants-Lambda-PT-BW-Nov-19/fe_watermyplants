@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,9 +9,8 @@ import { deletePlant } from '../actions/plants'
 import { connect } from "react-redux";
 
 function DeleteMyPlant(id, props) {
-  const [state, setState] = React.useState(id)
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,7 +20,7 @@ function DeleteMyPlant(id, props) {
   console.log(id)
   const handleDelete = (event) => {
     event.preventDefault();
-    id.deletePlant(state)
+    id.deletePlant(id)
   }
   return (
     <div>

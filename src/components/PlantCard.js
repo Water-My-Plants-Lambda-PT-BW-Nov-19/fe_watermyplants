@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,17 +8,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import LocalDrinkIcon from '@material-ui/icons/LocalDrink';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import {connect} from "react-redux"
+import { connect } from 'react-redux';
 
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import DeleteMyPlant from  "./DeletePlant"
-import EditPlant from "./EditPlant"
-import {Route, Link} from "react-router-dom"
-import {getPlantSchedule} from "../actions/plants"
-import Moment from 'moment'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteMyPlant from './DeletePlant';
+import { Link } from 'react-router-dom';
+import { getPlantSchedule } from '../actions/plants';
+import Moment from 'moment';
 
 const useStyles = makeStyles({
   card: {
@@ -25,23 +23,19 @@ const useStyles = makeStyles({
   },
 });
 function PlantCard(props) {
-  React.useEffect(()=> {
-    props.getPlantSchedule(props.id)
-  })
+  useEffect(() => {
+    let ps = getPlantSchedule(props.id);
+    console.log('PLANT SCHEDULE');
+    props.getPlantSchedule(props.id);
+  });
   const classes = useStyles();
 
-
   Moment.locale('en');
-  var dt = props.waterSchedule.water_schedule;
-
-
-
-
+  var dt = props.water_schedule;
+  console.log('DATETIME', dt);
   return (
-
     <div className="items-list-wrapper">
-<Card className={classes.card}>
-
+      <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -52,29 +46,29 @@ function PlantCard(props) {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-            {props.plant.name}
+              {props.plant.name}
+            </Typography>
+            <Typography gutterBottom variant="body1" component="h2">
+              Type: {props.plant.type}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-         <AccessTimeIcon color="primary" fontSize="small" /> {Moment(dt).format('hh:mm')}
+              Location: {props.plant.location}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <AccessTimeIcon color="primary" fontSize="small" />{' '}
+              {Moment(dt).format('hh:mm')}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Link to={`/plant/${props.id}/water`}>
-          <Button size="small" color="primary">
-          <EditIcon/>
-            Edit Water
-          </Button>
-          </Link>
-
           <Link to={`/plant/${props.id}/edit`}>
-          <Button size="small" color="primary">
-          <EditIcon/>
-            Edit
-          </Button>
+            <Button size="small" color="primary">
+              <EditIcon />
+              Edit
+            </Button>
           </Link>
           <Button size="small" color="primary">
-          <DeleteMyPlant id={props.id} />
+            <DeleteMyPlant id={props.id} />
           </Button>
         </CardActions>
       </Card>
@@ -83,18 +77,15 @@ function PlantCard(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
+  /*console.log(state);*/
   return {
     plants: state.plants.plantList,
-    waterSchedule: state.plants.waterList
+    waterSchedule: state.plants.waterList,
   };
 }
 
 const mapDispatchToProps = {
-  getPlantSchedule
+  getPlantSchedule,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlantCard);
+export default connect(mapStateToProps, mapDispatchToProps)(PlantCard);
